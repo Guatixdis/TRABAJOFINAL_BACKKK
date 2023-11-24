@@ -4,20 +4,16 @@ const Sequelize = require('sequelize');
 
 const ruta = express.Router()
 
-
  ruta.get('/listar', async function (req, res) {
       let data = await db.user.findAll(
             {
 
                attributes: [ 
-                   'id', 'nombre', 'email', 'carrera',
-                  [Sequelize.fn (
-                        'timezone', 'GMT+10', Sequelize.col("updatedAt") ) ,  'updatedAt'
-                  ]
-               ],
+                   'id', 'nombres', 'apellidos', 'Tdocumento', 'Ndocumento', 'correo', 'contrasenia', 'tipo'
+                  ],
                   
                order: [
-                      ['nombre', 'ASC']
+                      ['nombres', 'ASC']
                      ]
             }
       )
@@ -80,7 +76,7 @@ ruta.post('/agregar', async function (req, res) {
 ruta.put('/actualizar', async function (req,res) {
    user = req.body
    console.log(user)
-   let nombre = user["user"]
+   let nombres = user["user"]
 
    let data = await db.user.findOne(
       {
