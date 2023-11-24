@@ -1,0 +1,1 @@
+ALTER DATABASE semana14  set time zone  'GMT-5';
