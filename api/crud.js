@@ -1,8 +1,13 @@
-const express = require('express')
-const db = require('../db/models/index.js')
+const express = require('express');
+const cors = require('cors');
+const db = require('../db/models/index.js');
 const Sequelize = require('sequelize');
 
-const ruta = express.Router()
+const ruta = express.Router();
+
+// Agregar middleware CORS
+ruta.use(cors());
+
 
  ruta.get('/listar', async function (req, res) {
       let data = await db.user.findAll(
@@ -21,23 +26,6 @@ const ruta = express.Router()
        res.status(200).json( data );
 });
 
-ruta.get('/:id', async function (req, res) {
-    console.log( req.params.id)
-
-   let data = await db.user.findbyPk(
-      {
-         where: {
-            id: req.params.id
-         },
-         order: [
-                ['nombres', 'ASC']
-               ]
-      }
-   )
-   console.log( data )
-   res.status(200).json( data );
-});
-
 ruta.post('/agregar', async function (req, res) {
        user = req.body
        console.log(user)
@@ -45,9 +33,13 @@ ruta.post('/agregar', async function (req, res) {
 
         data = await db.user.create(
          {
-            nombres : nombre,
-            email : nombre + "@noseque.nosenada.com",
-            carrera : "Todas las anteriores",
+            nombres : user.nombres,
+            apellidos : user.apellidos,
+            Tdocumento : user.Tdocumento,
+            Ndocumento : user.Ndocumento,
+            correo : user.correo,
+            contrasenia : user.contrasenia,
+            tipo : "usuario",
             createdAt: new Date(),
             updatedAt: new Date()
             
@@ -57,52 +49,5 @@ ruta.post('/agregar', async function (req, res) {
        console.log( data );
        res.status(200).json( data );
  });
-
- ruta.delete('/eliminar/:id', async function (req, res) {
-       let key = req.params.id;
-       let data  = await db.user.destroy(
-         {
-            where : {
-               id : key
-            }
-         }
-       )
-        
-       console.log( data );
-       res.end( JSON.stringify(data));
-});
-
-
-ruta.put('/actualizar', async function (req,res) {
-   user = req.body
-   console.log(user)
-   let nombres = user["user"]
-
-   let data = await db.user.findOne(
-      {
-         where: {
-            nombre: nombre
-         }
-      }
-   )
-
-   if ( data != null )  { 
-      let correo = data.email
-      data = await db.user.update(
-          { 
-            email: correo + "1" 
-         }, 
-      {
-         where : {
-            nombre: nombre
-            },
-      }
-   );
-       res.status(200).json( data );
-   } else {
-      res.status(404).json( data );
-   }
-
-   })
 
  module.exports = ruta
