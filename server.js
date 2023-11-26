@@ -7,6 +7,8 @@ const app = express()
 const port = 3080
 
 const crud = require('./api/crud')
+const editarRecursosAPI = require('./api/editarRecursosAPI')
+const reserva = require('./api/leerListaReservasAPI')
 
 app.use(express.static(path.join(__dirname, './static')));
 app.use(bodyParser.json());
@@ -16,6 +18,8 @@ app.use(cors({
 }));
 
 app.use('/api', crud)
+app.use('/recurso', editarRecursosAPI)
+app.use('/reserva', reserva)
 
 app.get('/', (req,res) => {
   res.sendFile(path.join(__dirname, './static/index.html'));
