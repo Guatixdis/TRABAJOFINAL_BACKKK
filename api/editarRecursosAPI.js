@@ -9,7 +9,6 @@ ruta.get('/listar', async function (req, res) {
       attributes: ['id', 'titulo', 'autor', 'isbn', 'serie', 'img'],
       order: [['titulo', 'ASC']]
     });
-    console.log(data);
     res.status(200).json(data);
   } catch (error) {
     console.error(error);
@@ -20,7 +19,6 @@ ruta.get('/listar', async function (req, res) {
 ruta.get('/:id', async function (req, res) {
   try {
     const data = await db.recurso.findByPk(req.params.id);
-    console.log(data);
     res.status(200).json(data);
   } catch (error) {
     console.error(error);
@@ -40,7 +38,6 @@ ruta.post('/agregar', async function (req, res) {
       createdAt: new Date(),
       updatedAt: new Date()
     });
-    console.log(data);
     res.status(200).json(data);
   } catch (error) {
     console.error(error);
@@ -52,7 +49,6 @@ ruta.delete('/eliminar/:id', async function (req, res) {
   try {
     const id = req.params.id;
     const data = await db.recurso.destroy({ where: { id } });
-    console.log(data);
     res.status(200).json(data);
   } catch (error) {
     console.error(error);
@@ -71,7 +67,6 @@ ruta.put('/actualizar/:id', async function (req, res) {
       serie,
       img
     }, { where: { id } });
-    console.log(data);
     res.status(200).json(data);
   } catch (error) {
     console.error(error);
