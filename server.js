@@ -18,8 +18,8 @@ app.use(cors({
 }));
 
 app.use('/api', crud)
-app.use('/recurso', editarRecursosAPI)
-app.use('/reserva', listareserva)
+app.use('/api/recurso', editarRecursosAPI)
+app.use('/api/reserva', listareserva)
 
 app.get('/', (req,res) => {
   res.sendFile(path.join(__dirname, './static/index.html'));
